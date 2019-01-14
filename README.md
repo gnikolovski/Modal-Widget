@@ -18,7 +18,8 @@ for any Entity reference field to "Modal widget".
 
 NOTE: This module is in the early dev stage and as of now supports only the Edit 
 operation. That means that you cannot create a new entity, you can just edit an 
-existing entity.
+existing entity. You can use the widget only for single value fields (where 
+allowed number of values is limited to 1).
 
 
 REQUIREMENTS
