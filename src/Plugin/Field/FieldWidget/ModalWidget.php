@@ -2,6 +2,7 @@
 
 namespace Drupal\modal_widget\Plugin\Field\FieldWidget;
 
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -105,6 +106,13 @@ class ModalWidget extends WidgetBase {
         ],
       ],
     ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function isApplicable(FieldDefinitionInterface $field_definition) {
+    return $field_definition->getFieldStorageDefinition()->getCardinality() == 1;
   }
 
 }
