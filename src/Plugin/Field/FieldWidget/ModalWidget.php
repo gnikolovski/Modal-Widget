@@ -30,6 +30,8 @@ class ModalWidget extends WidgetBase {
     $defaults += [
       'width' => '800',
       'height' => '500',
+      'override_label' => FALSE,
+      'label_singular' => '',
     ];
 
     return $defaults;
@@ -51,6 +53,23 @@ class ModalWidget extends WidgetBase {
       '#type' => 'number',
       '#title' => $this->t('Modal height'),
       '#default_value' => $this->getSetting('height'),
+    ];
+
+    $element['override_label'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Override label'),
+      '#default_value' => $this->getSetting('override_label'),
+    ];
+
+    $element['label_singular'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Singular label'),
+      '#default_value' => $this->getSetting('label_singular'),
+      '#states' => [
+        'visible' => [
+          ':input[name="fields[' . $this->fieldDefinition->getName() . '][settings_edit_form][settings][override_label]"]' => ['checked' => TRUE],
+        ],
+      ],
     ];
 
     return $element;
@@ -76,6 +95,13 @@ class ModalWidget extends WidgetBase {
       $summary[] = $this->t('Height: not set.');
     }
 
+    if ($this->getSetting('override_label')) {
+      $summary[] = $this->t('Overriden label is used: %singular', ['%singular' => $this->getSetting('label_singular')]);
+    }
+    else {
+      $summary[] = $this->t('Default label is used.');
+    }
+
     return $summary;
   }
 
@@ -94,9 +120,16 @@ class ModalWidget extends WidgetBase {
       'entity_id' => $items->first()->getValue()['target_id'],
     ]);
 
+    if ($this->getSetting('override_label')) {
+      $title = $this->getSetting('label_singular');
+    }
+    else {
+      $title = $this->t('Edit entity');
+    }
+
     return [
       '#type' => 'link',
-      '#title' => $this->t('Edit entity'),
+      '#title' => $title,
       '#url' => $url,
       '#ajax' => [
         'dialogType' => 'modal',
