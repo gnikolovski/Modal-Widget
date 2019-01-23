@@ -1,0 +1,16 @@
+field.widget.settings.modal_widget:
+  type: mapping
+  label: 'Modal widget display format settings'
+  mapping:
+    width:
+      type: integer
+      label: "Modal width"
+    height:
+      type: integer
+      label: "Modal height"
+    override_label:
+      type: boolean
+      label: "Override label"
+    label_singular:
+      type: string
+      label: "Singular label"
