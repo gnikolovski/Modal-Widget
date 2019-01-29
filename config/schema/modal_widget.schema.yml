@@ -14,3 +14,9 @@ field.widget.settings.modal_widget:
     label_singular:
       type: string
       label: "Singular label"
+    override_modal_title:
+      type: boolean
+      label: "Override modal title"
+    modal_title:
+      type: string
+      label: "Modal title"

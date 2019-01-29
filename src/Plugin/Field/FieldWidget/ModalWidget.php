@@ -32,6 +32,8 @@ class ModalWidget extends WidgetBase {
       'height' => '500',
       'override_label' => FALSE,
       'label_singular' => '',
+      'override_modal_title' => '',
+      'modal_title' => '',
     ];
 
     return $defaults;
@@ -72,6 +74,23 @@ class ModalWidget extends WidgetBase {
       ],
     ];
 
+    $element['override_modal_title'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Override modal title'),
+      '#default_value' => $this->getSetting('override_modal_title'),
+    ];
+
+    $element['modal_title'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Modal title'),
+      '#default_value' => $this->getSetting('modal_title'),
+      '#states' => [
+        'visible' => [
+          ':input[name="fields[' . $this->fieldDefinition->getName() . '][settings_edit_form][settings][override_modal_title]"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+
     return $element;
   }
 
@@ -102,6 +121,13 @@ class ModalWidget extends WidgetBase {
       $summary[] = $this->t('Default label is used.');
     }
 
+    if ($this->getSetting('override_modal_title')) {
+      $summary[] = $this->t('Overriden modal title is used: %modal_title', ['%modal_title' => $this->getSetting('modal_title')]);
+    }
+    else {
+      $summary[] = $this->t('Default modal title is used.');
+    }
+
     return $summary;
   }
 
@@ -127,6 +153,13 @@ class ModalWidget extends WidgetBase {
       $title = $this->t('Edit entity');
     }
 
+    if ($this->getSetting('override_modal_title')) {
+      $modal_title = $this->getSetting('modal_title');
+    }
+    else {
+      $modal_title = $title;
+    }
+
     return [
       '#type' => 'link',
       '#title' => $title,
@@ -136,6 +169,7 @@ class ModalWidget extends WidgetBase {
         'dialog' => [
           'width' => $this->getSetting('width'),
           'height' => $this->getSetting('height'),
+          'title' => $modal_title,
         ],
       ],
     ];
