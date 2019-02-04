@@ -55,18 +55,19 @@ class ModalController extends ControllerBase implements ContainerInjectionInterf
    *
    * @param $entity_type
    * @param $entity_id
+   * @param $form_mode
    *
    * @return array
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function modal($entity_type, $entity_id) {
+  public function modal($entity_type, $entity_id, $form_mode) {
     $entity = $this->entityTypeManager
       ->getStorage($entity_type)
       ->load($entity_id);
 
     return $this->entityFormBuilder
-      ->getForm($entity);
+      ->getForm($entity, $form_mode);
   }
 
 }
