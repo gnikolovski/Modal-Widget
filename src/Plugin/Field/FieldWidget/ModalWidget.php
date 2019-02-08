@@ -163,7 +163,9 @@ class ModalWidget extends WidgetBase {
       $title = $this->getSetting('label_singular');
     }
     else {
-      $title = $this->t('Edit entity');
+      $title = $this->t('Edit @entity-type', [
+        '@entity-type' => ucfirst(str_replace('_', ' ', $entity_type)),
+      ]);
     }
 
     if ($this->getSetting('override_modal_title')) {
