@@ -71,8 +71,10 @@ function modal_widget_entity_type_alter(array &$entity_types) {
     $type = $entity_types[$entity_type];
 
     foreach ($display_modes as $machine_name => $form_display) {
-      $default_handler_class = $type->getHandlerClasses()['form']['default'];
-      $type->setFormClass($machine_name, $default_handler_class);
+      if (isset($type->getHandlerClasses()['form']['default'])) {
+        $default_handler_class = $type->getHandlerClasses()['form']['default'];
+        $type->setFormClass($machine_name, $default_handler_class);
+      }
     }
   }
 }
